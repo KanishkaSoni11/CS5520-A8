@@ -38,7 +38,7 @@ public class StickerGridViewAdapter extends BaseAdapter {
 
         if (convertView == null) {
             imageView = new ImageView(this.context);
-            imageView.setLayoutParams(new GridView.LayoutParams(130, 130));
+            imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(16, 16, 16, 16);
         } else {

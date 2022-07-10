@@ -12,7 +12,9 @@ public class StickerGridActivity extends AppCompatActivity {
 
     private final Integer[] imageIdArray = {
             R.drawable.angel, R.drawable.angry, R.drawable.angry,
-            R.drawable.bored, R.drawable.happy
+            R.drawable.bored, R.drawable.happy, R.drawable.happy,
+            R.drawable.hungry, R.drawable.hungry_sad, R.drawable.surprised,
+            R.drawable.teddy_bear, R.drawable.teddy_bear_book
     };
 
     @Override
@@ -23,12 +25,13 @@ public class StickerGridActivity extends AppCompatActivity {
         GridView stickerGridView = (GridView) findViewById(R.id.sticker_grid_view);
         StickerGridViewAdapter adapter = new StickerGridViewAdapter(this, imageIdArray);
         stickerGridView.setAdapter(adapter);
+        stickerGridView.setGravity(GridView.AUTO_FIT);
 
         stickerGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
                                     View v, int position, long id) {
                 Toast.makeText(getBaseContext(), "Grid Item " + (position + 1) + " Selected",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
