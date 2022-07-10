@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.EditText;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,5 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void onChildAdded1(View view) {
+        RealTimeDbActivity stickerExchangeDetails = new RealTimeDbActivity();
+        stickerExchangeDetails.onChildAdded1(view);
     }
 }
