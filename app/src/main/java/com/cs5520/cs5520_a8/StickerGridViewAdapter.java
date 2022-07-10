@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+// Code referred from https://www.viralandroid.com/2016/03/display-images-in-android-gridview.html
 public class StickerGridViewAdapter extends BaseAdapter {
 
     private final Context context;
