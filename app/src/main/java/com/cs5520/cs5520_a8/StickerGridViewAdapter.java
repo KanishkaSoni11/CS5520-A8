@@ -11,9 +11,9 @@ import android.widget.ImageView;
 public class StickerGridViewAdapter extends BaseAdapter {
 
     private final Context context;
-    private final Integer[] imageIds;
+    private final String[] imageIds;
 
-    public StickerGridViewAdapter(Context context, Integer[] imageIds) {
+    public StickerGridViewAdapter(Context context, String[] imageIds) {
         this.context = context;
         this.imageIds = imageIds;
     }
@@ -45,7 +45,8 @@ public class StickerGridViewAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        imageView.setImageResource(this.imageIds[position]);
+        int resourceId = context.getResources().getIdentifier(this.imageIds[position] , "drawable", context.getPackageName());
+        imageView.setImageResource(resourceId);
         return imageView;
     }
 }
