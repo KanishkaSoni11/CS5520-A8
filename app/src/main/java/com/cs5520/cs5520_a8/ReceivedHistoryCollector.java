@@ -3,9 +3,9 @@ package com.cs5520.cs5520_a8;
 public class ReceivedHistoryCollector {
     public String senderId;
     public String dateSent;
-    public String sticker;
+    public int sticker;
 
-    public ReceivedHistoryCollector(String senderId, String dateSent, String sticker) {
+    public ReceivedHistoryCollector(String senderId, String dateSent, int sticker) {
         this.senderId = senderId;
         this.dateSent = dateSent;
         this.sticker = sticker;
@@ -19,7 +19,7 @@ public class ReceivedHistoryCollector {
         return this.dateSent;
     }
 
-    public String getSticker() {
+    public int getSticker() {
         return this.sticker;
     }
 }
