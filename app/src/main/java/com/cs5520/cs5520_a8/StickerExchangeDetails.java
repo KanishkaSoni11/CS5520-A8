@@ -6,6 +6,16 @@ public class StickerExchangeDetails {
     public String dateSent;
     public String receiverId;
 
+    public StickerExchangeDetails() {
+    }
+
+    public StickerExchangeDetails(String senderId, String stickerId, String dateSent, String receiverId) {
+        this.senderId = senderId;
+        this.stickerId = stickerId;
+        this.dateSent = dateSent;
+        this.receiverId = receiverId;
+    }
+
     public String getSenderId() {
         return senderId;
     }
@@ -38,12 +48,7 @@ public class StickerExchangeDetails {
         return receiverId;
     }
 
-    public StickerExchangeDetails(String senderId, String stickerId, String dateSent, String receiverId) {
-        this.senderId = senderId;
-        this.stickerId = stickerId;
-        this.dateSent = dateSent;
-        this.receiverId = receiverId;
-    }
+
 }
 
 
