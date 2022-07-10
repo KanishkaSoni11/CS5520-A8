@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,11 +32,13 @@ public class SentHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sent_history);
-        System.out.println("Holaaaaa");
         databaseReference = FirebaseDatabase.getInstance().getReference("stickerExchangeDetails");
         sentHistoryRecyclerView = findViewById(R.id.sentRecyclerView);
         sentHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         sentHistoryRecyclerView.setHasFixedSize(true);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(sentHistoryRecyclerView.getContext(),
+                DividerItemDecoration.VERTICAL);
+        sentHistoryRecyclerView.addItemDecoration(dividerItemDecoration);
 
         sentHistoryList = new ArrayList<>();
         sentHistoryAdapter = new SentHistoryAdapter(sentHistoryList, this);
@@ -57,7 +60,6 @@ public class SentHistoryActivity extends AppCompatActivity {
                     }
                 }
 
-                System.out.println(sentMap);
                 for(Map.Entry<String, Integer> m: sentMap.entrySet()) {
                     SentHistory sentHistory = new SentHistory(m.getKey(), String.valueOf(m.getValue()));
                     sentHistoryList.add(sentHistory);

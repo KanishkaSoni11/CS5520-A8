@@ -9,28 +9,28 @@
         android:id="@+id/sent_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/sentSticker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toStartOf="@id/sentCount"/>
+            android:layout_marginBottom="1dp"
+            android:theme="@style/Theme.CS5520A8" />
 
         <TextView
             android:id="@+id/sentCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="1dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="15dp" />
-
+            android:layout_marginBottom="5dp"
+            android:gravity="center|center_vertical"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <Space
