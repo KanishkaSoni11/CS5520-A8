@@ -1,5 +1,6 @@
 package com.cs5520.cs5520_a8;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,8 +23,14 @@ public class ReceivedHistoryViewHolder extends RecyclerView.ViewHolder{
     public void bindThisData(ReceivedHistoryCollector theLinkToBind) {
         senderId.setText("Receiver from : " + theLinkToBind.getSenderId());
         dateSent.setText(("Date: " + theLinkToBind.getDateSent()));
+        String uri = "@drawable/"+ theLinkToBind.getSticker(); // where myresource (without the extension) is the file
 
-        sticker.setImageResource(Integer.parseInt((theLinkToBind.getSticker())));
+        int imageResource = itemView.getContext().getResources().getIdentifier(uri, null, itemView.getContext().getPackageName());
+        System.out.println("stickerrrr"  + uri);
+
+        Drawable res = itemView.getContext().getResources().getDrawable(imageResource);
+        sticker.setImageDrawable(res);
+
 
 
     }
