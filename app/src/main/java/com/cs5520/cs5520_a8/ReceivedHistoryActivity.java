@@ -82,14 +82,11 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
 
                 notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
 
-                System.out.println("Hereeee");
-                System.out.println("Snap " + snapshot.toString());
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                     StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
 
                     if (stickerExchangeDetails.receiverId.equals(userID)) {
-                        System.out.println("list" + stickerExchangeDetails.toString());
                         ReceivedHistoryCollector receivedHistoryCollector = new ReceivedHistoryCollector(stickerExchangeDetails.getSenderId(), stickerExchangeDetails.getDateSent(), stickerExchangeDetails.getStickerId());
                         receivedHistoryCollectors.add(receivedHistoryCollector);
                     }
