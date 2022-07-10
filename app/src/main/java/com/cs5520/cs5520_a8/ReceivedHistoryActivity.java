@@ -22,15 +22,10 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
 
         receiveHistoryRecyclerView = findViewById(R.id.recyclerView_receive_history);
         receivedHistoryCollectors = new ArrayList<>();
-
-
-
         receiveHistoryRecyclerView.setHasFixedSize(true);
 
-        //This defines the way in which the RecyclerView is oriented
         receiveHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //Associates the adapter with the RecyclerView
         receivedHIstoryAdapter = new ReceivedHIstoryAdapter(receivedHistoryCollectors, this);
         receiveHistoryRecyclerView.setAdapter(receivedHIstoryAdapter);
 
