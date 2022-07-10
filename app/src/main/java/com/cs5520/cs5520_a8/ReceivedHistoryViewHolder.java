@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,9 +28,15 @@ public class ReceivedHistoryViewHolder extends RecyclerView.ViewHolder{
         String uri = "@drawable/"+ theLinkToBind.getSticker(); // where myresource (without the extension) is the file
 
         int imageResource = itemView.getContext().getResources().getIdentifier(uri, null, itemView.getContext().getPackageName());
+        try {
+            Drawable res = itemView.getContext().getResources().getDrawable(imageResource);
+            sticker.setImageDrawable(res);
+        }catch (Exception exception) {
 
-        Drawable res = itemView.getContext().getResources().getDrawable(imageResource);
-        sticker.setImageDrawable(res);
+            Toast.makeText(itemView.getContext(), "Images not loaded due to different version", Toast.LENGTH_SHORT).show();
+        }
+
+//        sticker.setImageDrawable(res);
 
 
 
