@@ -6,9 +6,12 @@ public class StickerExchangeDetails {
     private String dateSent;
     private String receiverId;
 
-    public StickerExchangeDetails(String userId) {
+    public StickerExchangeDetails(String senderId, String stickerId, String dateSent, String receiverId) {
         this.senderId = senderId;
+        this.stickerId = stickerId;
         this.dateSent = dateSent;
+        this.receiverId = receiverId;
+
 
     }
 }
