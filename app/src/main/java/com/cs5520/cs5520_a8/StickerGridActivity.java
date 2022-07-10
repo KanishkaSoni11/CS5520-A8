@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 // Code referred from https://www.viralandroid.com/2016/03/display-images-in-android-gridview.html
@@ -105,9 +107,13 @@ public class StickerGridActivity extends AppCompatActivity {
 
     private void addDataToFirebase(String stickerID, String receiver) {
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+
         stickerExchangeDetails.setSenderId(userID);
         stickerExchangeDetails.setReceiverId(receiver);
         stickerExchangeDetails.setStickerId(stickerID);
+        stickerExchangeDetails.setDateSent(formatter.format(date));
 
         mDatabase.child("allExchanges").push().setValue(stickerExchangeDetails);
         mDatabase.addValueEventListener(new ValueEventListener() {
