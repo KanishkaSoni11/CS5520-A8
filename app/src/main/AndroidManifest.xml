@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CS5520A8">
         <activity
+            android:name=".StickerGridActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
