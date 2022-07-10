@@ -81,6 +81,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                receivedHistoryCollectors.clear();
 
                 notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
 
