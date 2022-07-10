@@ -45,7 +45,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         userID = sharedPreferences.getString("username", "");
 
         System.out.println("username " + userID);
-        mDatabase.child("allExchanges").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("allExchanges").orderByChild("dateSent").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("Hereeee");
