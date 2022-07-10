@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ReceivedHIstoryAdapter extends RecyclerView.Adapter<ReceivedHistoryViewHolder> {
+public class ReceivedHistoryAdapter extends RecyclerView.Adapter<ReceivedHistoryViewHolder> {
 
     private List<ReceivedHistoryCollector> receivedHistoryCollectors;
     private final Context context;
 
-    public ReceivedHIstoryAdapter(List<ReceivedHistoryCollector> receivedHistoryCollectors, Context context) {
+    public ReceivedHistoryAdapter(List<ReceivedHistoryCollector> receivedHistoryCollectors, Context context) {
         this.receivedHistoryCollectors = receivedHistoryCollectors;
         this.context = context;
     }

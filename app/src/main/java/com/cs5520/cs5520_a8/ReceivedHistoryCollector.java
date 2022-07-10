@@ -1,5 +1,7 @@
 package com.cs5520.cs5520_a8;
 
+import android.view.View;
+
 public class ReceivedHistoryCollector {
     public String senderId;
     public String dateSent;
