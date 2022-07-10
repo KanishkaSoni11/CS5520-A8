@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//Notification Code Referred from: https://developer.android.com/training/notify-user/build-notification
+
 public class ReceivedHistoryActivity extends AppCompatActivity {
 
     private RecyclerView receiveHistoryRecyclerView;
