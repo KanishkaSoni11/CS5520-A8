@@ -2,6 +2,7 @@ package com.cs5520.cs5520_a8;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +41,10 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         receivedHistoryCollectors = new ArrayList<>();
         receivedHIstoryAdapter = new ReceivedHistoryAdapter(receivedHistoryCollectors, this);
         receiveHistoryRecyclerView.setAdapter(receivedHIstoryAdapter);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(receiveHistoryRecyclerView.getContext(),
+                DividerItemDecoration.VERTICAL);
+        receiveHistoryRecyclerView.addItemDecoration(dividerItemDecoration);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         userID = sharedPreferences.getString("username", "");

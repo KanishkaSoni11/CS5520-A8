@@ -21,12 +21,12 @@ public class ReceivedHistoryViewHolder extends RecyclerView.ViewHolder{
     }
 
     public void bindThisData(ReceivedHistoryCollector theLinkToBind) {
-        senderId.setText("Received from : " + theLinkToBind.getSenderId());
-        dateSent.setText(("Time : " + theLinkToBind.getDateSent()));
+
+        senderId.setText(("Sender: " + theLinkToBind.getSenderId()));
+        dateSent.setText(("Time: " + theLinkToBind.getDateSent()));
         String uri = "@drawable/"+ theLinkToBind.getSticker(); // where myresource (without the extension) is the file
 
         int imageResource = itemView.getContext().getResources().getIdentifier(uri, null, itemView.getContext().getPackageName());
-        System.out.println("stickerrrr"  + uri);
 
         Drawable res = itemView.getContext().getResources().getDrawable(imageResource);
         sticker.setImageDrawable(res);
