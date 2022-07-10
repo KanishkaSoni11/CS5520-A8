@@ -18,7 +18,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         Button stickersButton = (Button) findViewById(R.id.stickers_button);
-        Button history = (Button) findViewById(R.id.history_button);
+        Button sentHistoryButton = (Button) findViewById(R.id.sent_history_button);
         Button receiveHistoryButton = findViewById(R.id.receive_history_button);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
@@ -43,5 +43,14 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        sentHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, SentHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
