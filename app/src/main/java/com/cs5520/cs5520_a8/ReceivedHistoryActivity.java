@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 //Notification Code Referred from: https://developer.android.com/training/notify-user/build-notification
@@ -84,16 +85,24 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
 
                 notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
 
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                     StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
 
-                    if (stickerExchangeDetails.receiverId.equals(userID)) {
+
+                    if (stickerExchangeDetails.receiverId.equals(userID) ) {
+                        System.out.println("list" + stickerExchangeDetails.toString());
+
                         ReceivedHistoryCollector receivedHistoryCollector = new ReceivedHistoryCollector(stickerExchangeDetails.getSenderId(), stickerExchangeDetails.getDateSent(), stickerExchangeDetails.getStickerId());
-                        receivedHistoryCollectors.add(receivedHistoryCollector);
+                        if(!receivedHistoryCollectors.contains(receivedHistoryCollector)) {
+                            receivedHistoryCollectors.add(receivedHistoryCollector);
+                        }
+
                     }
 
                 }
+
 
                 receivedHIstoryAdapter.notifyDataSetChanged();
             }
