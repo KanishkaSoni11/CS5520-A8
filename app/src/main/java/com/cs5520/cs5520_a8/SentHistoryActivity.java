@@ -1,6 +1,7 @@
 package com.cs5520.cs5520_a8;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,16 +42,12 @@ public class SentHistoryActivity extends AppCompatActivity {
         sentHistoryRecyclerView.setAdapter(sentHistoryAdapter);
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         String value = sharedPreferences.getString("username","");
-        System.out.println("Username: "+value);
         databaseReference.child("allExchanges").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("Hereeee");
-                System.out.println("Snap " + snapshot.toString());
                 Map<String, Integer> sentMap = new HashMap<>();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
-                    System.out.println("list" + stickerExchangeDetails.toString());
                     if(stickerExchangeDetails.getSenderId().equals(value)) {
                         if(sentMap.containsKey(stickerExchangeDetails.getStickerId())) {
                             int oldCount = sentMap.get(stickerExchangeDetails.getStickerId());
@@ -62,13 +59,11 @@ public class SentHistoryActivity extends AppCompatActivity {
 
                 System.out.println(sentMap);
                 for(Map.Entry<String, Integer> m: sentMap.entrySet()) {
-                    SentHistory sentHistory = new SentHistory(m.getKey(), m.getValue());
+                    SentHistory sentHistory = new SentHistory(m.getKey(), String.valueOf(m.getValue()));
                     sentHistoryList.add(sentHistory);
                 }
-
                 sentHistoryAdapter.notifyDataSetChanged();
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
