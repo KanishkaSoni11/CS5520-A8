@@ -7,18 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu);
 
-        Button loginButton = (Button)findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        Button stickersButton = (Button) findViewById(R.id.stickers_button);
+        Button history = (Button) findViewById(R.id.history_button);
+
+        stickersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                Intent intent = new Intent(MenuActivity.this, StickerGridActivity.class);
                 startActivity(intent);
             }
         });
