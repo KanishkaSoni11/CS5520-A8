@@ -22,7 +22,8 @@ public class ReceivedHistoryViewHolder extends RecyclerView.ViewHolder{
     public void bindThisData(ReceivedHistoryCollector theLinkToBind) {
         senderId.setText("Receiver from : " + theLinkToBind.getSenderId());
         dateSent.setText(("Date: " + theLinkToBind.getDateSent()));
-        sticker.setImageResource(theLinkToBind.getSticker());
+
+        sticker.setImageResource(Integer.parseInt((theLinkToBind.getSticker())));
 
 
     }

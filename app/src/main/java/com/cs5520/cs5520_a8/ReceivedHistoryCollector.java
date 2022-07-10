@@ -5,9 +5,9 @@ import android.view.View;
 public class ReceivedHistoryCollector {
     public String senderId;
     public String dateSent;
-    public int sticker;
+    public String sticker;
 
-    public ReceivedHistoryCollector(String senderId, String dateSent, int sticker) {
+    public ReceivedHistoryCollector(String senderId, String dateSent, String sticker) {
         this.senderId = senderId;
         this.dateSent = dateSent;
         this.sticker = sticker;
@@ -21,7 +21,7 @@ public class ReceivedHistoryCollector {
         return this.dateSent;
     }
 
-    public int getSticker() {
+    public String getSticker() {
         return this.sticker;
     }
 }
