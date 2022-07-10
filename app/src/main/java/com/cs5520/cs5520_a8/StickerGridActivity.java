@@ -11,10 +11,8 @@ import android.widget.Toast;
 public class StickerGridActivity extends AppCompatActivity {
 
     private final Integer[] imageIdArray = {
-            R.drawable.angel, R.drawable.angry, R.drawable.angry,
-            R.drawable.bored, R.drawable.happy, R.drawable.happy,
-            R.drawable.hungry, R.drawable.hungry_sad, R.drawable.surprised,
-            R.drawable.teddy_bear, R.drawable.teddy_bear_book
+            R.drawable.angel, R.drawable.angry, R.drawable.angry_man,
+            R.drawable.bored, R.drawable.happy
     };
 
     @Override
