@@ -2,10 +2,10 @@ package com.cs5520.cs5520_a8;
 
 public class SentHistory {
 
-    private int sticker;
+    private String sticker;
     private int count;
 
-    public SentHistory(int sticker, int count) {
+    public SentHistory(String sticker, int count) {
         this.sticker = sticker;
         this.count = count;
     }
@@ -14,7 +14,7 @@ public class SentHistory {
         return count;
     }
 
-    public int getSticker() {
+    public String getSticker() {
         return sticker;
     }
 }

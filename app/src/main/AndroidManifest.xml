@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CS5520A8">
         <activity
+            android:name=".SentHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReceivedHistoryActivity"
             android:exported="false" />
         <activity
