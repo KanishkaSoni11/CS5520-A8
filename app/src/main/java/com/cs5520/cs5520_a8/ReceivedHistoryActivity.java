@@ -2,11 +2,18 @@ package com.cs5520.cs5520_a8;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -33,6 +40,22 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_received_history);
 
+        createNotificationChannel();
+
+        Intent intent = new Intent(this, ReceivedHistoryActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "receiver")
+                .setSmallIcon(R.drawable.happy)
+                .setContentTitle("New Sticker Received")
+                .setContentText("Someone sent you a new sticker.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference("stickerExchangeDetails");
         receiveHistoryRecyclerView = findViewById(R.id.recyclerView_receive_history);
         receiveHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -50,9 +73,15 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         userID = sharedPreferences.getString("username", "");
 
         System.out.println("username " + userID);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
         mDatabase.child("allExchanges").orderByChild("dateSent").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
+
                 System.out.println("Hereeee");
                 System.out.println("Snap " + snapshot.toString());
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -78,5 +107,21 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Receive Notification";
+            String description = "Receive Notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("receiver", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
