@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +25,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
     private List<ReceivedHistoryCollector> receivedHistoryCollectors;
     private ReceivedHistoryAdapter receivedHIstoryAdapter;
     private DatabaseReference mDatabase;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +40,26 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         receivedHistoryCollectors = new ArrayList<>();
         receivedHIstoryAdapter = new ReceivedHistoryAdapter(receivedHistoryCollectors, this);
         receiveHistoryRecyclerView.setAdapter(receivedHIstoryAdapter);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        userID = sharedPreferences.getString("username", "");
+
+        System.out.println("username " + userID);
         mDatabase.child("allExchanges").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("Hereeee");
                 System.out.println("Snap " + snapshot.toString());
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
                     StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
-                    System.out.println("list" + stickerExchangeDetails.toString());
-                    ReceivedHistoryCollector receivedHistoryCollector = new ReceivedHistoryCollector(stickerExchangeDetails.getSenderId(), stickerExchangeDetails.getDateSent(),stickerExchangeDetails.getStickerId());
-                    receivedHistoryCollectors.add(receivedHistoryCollector);
+
+                    if (stickerExchangeDetails.receiverId.equals(userID)) {
+                        System.out.println("list" + stickerExchangeDetails.toString());
+                        ReceivedHistoryCollector receivedHistoryCollector = new ReceivedHistoryCollector(stickerExchangeDetails.getSenderId(), stickerExchangeDetails.getDateSent(), stickerExchangeDetails.getStickerId());
+                        receivedHistoryCollectors.add(receivedHistoryCollector);
+                    }
+
                 }
 
                 receivedHIstoryAdapter.notifyDataSetChanged();
@@ -58,7 +71,6 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
