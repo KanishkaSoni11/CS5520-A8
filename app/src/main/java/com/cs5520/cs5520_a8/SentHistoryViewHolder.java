@@ -27,6 +27,7 @@ public class SentHistoryViewHolder  extends RecyclerView.ViewHolder {
         int imageResource = itemView.getContext().getResources().getIdentifier(uri, null, itemView.getContext().getPackageName());
         Drawable res = itemView.getContext().getResources().getDrawable(imageResource);
         stickerIV.setImageDrawable(res);
-        countTV.setText(sentHistoryToBind.getCount());
+        String s = "Sent Count: ".concat(sentHistoryToBind.getCount());
+        countTV.setText(s);
     }
 }
