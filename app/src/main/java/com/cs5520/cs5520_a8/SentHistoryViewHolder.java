@@ -1,6 +1,7 @@
 package com.cs5520.cs5520_a8;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,8 +22,11 @@ public class SentHistoryViewHolder  extends RecyclerView.ViewHolder {
     }
 
     public void bindThisData(SentHistory sentHistoryToBind) {
-//        int resourceId = context.getResources().getIdentifier(name, "drawable", YourApplication.getContext().getPackageName());
-//        stickerIV.setImageResource(sentHistoryToBind.getSticker()); //change to get data from firebase;
+
+        String uri = "@drawable/"+ sentHistoryToBind.getSticker();
+        int imageResource = itemView.getContext().getResources().getIdentifier(uri, null, itemView.getContext().getPackageName());
+        Drawable res = itemView.getContext().getResources().getDrawable(imageResource);
+        stickerIV.setImageDrawable(res);
         countTV.setText(sentHistoryToBind.getCount());
     }
 }

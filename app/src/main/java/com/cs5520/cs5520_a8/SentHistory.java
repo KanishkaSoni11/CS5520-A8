@@ -3,14 +3,14 @@ package com.cs5520.cs5520_a8;
 public class SentHistory {
 
     private String sticker;
-    private int count;
+    private String count;
 
-    public SentHistory(String sticker, int count) {
+    public SentHistory(String sticker, String count) {
         this.sticker = sticker;
         this.count = count;
     }
 
-    public int getCount() {
+    public String getCount() {
         return count;
     }
 
