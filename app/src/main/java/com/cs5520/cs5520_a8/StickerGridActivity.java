@@ -55,24 +55,17 @@ public class StickerGridActivity extends AppCompatActivity {
         stickerExchangeDetails = new StickerExchangeDetails();
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        userID = sharedPreferences.getString("username","");
+        userID = sharedPreferences.getString("username", "");
 
 
         String[] imageIdArray = {
                 "angel", "angry", "angry_man",
-               "bored", "happy"
+                "bored", "happy"
         };
 
         GridView stickerGridView = (GridView) findViewById(R.id.sticker_grid_view);
         StickerGridViewAdapter adapter = new StickerGridViewAdapter(this, imageIdArray);
         stickerGridView.setAdapter(adapter);
-
-//        createNotificationChannel();
-//
-//        Intent intent = new Intent(this, ReceivedHistoryActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
 
 
         View parentLayout = findViewById(android.R.id.content);
@@ -110,26 +103,9 @@ public class StickerGridActivity extends AppCompatActivity {
 
                                     }
                                 })
-                                .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                                .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
                                 .show();
-//                        String uri = "@drawable/"+ imageIdArray[position];
-//                        int sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
-//                        NotificationCompat.Builder builder = new NotificationCompat.Builder(StickerGridActivity.this, "receiver")
-//                                .setSmallIcon(R.drawable.happy)
-//                                .setContentTitle(receiverID)
-//                                .setContentText("Someone sent you a new sticker.")
-//                                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker))
-//                                .setStyle(new NotificationCompat.BigPictureStyle()
-//                                .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker)
-//                                ).bigLargeIcon(null))
-//                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                                // Set the intent that will fire when the user taps the notification
-//                                .setContentIntent(pendingIntent)
-//                                .setAutoCancel(true);
-//
-//                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(StickerGridActivity.this);
-//
-//                            notificationManager.notify(1, builder.build());
+
 
                     }
                 });
@@ -167,20 +143,5 @@ public class StickerGridActivity extends AppCompatActivity {
         });
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Receive Notification";
-            String description = "Receive Notification";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("receiver", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 
 }

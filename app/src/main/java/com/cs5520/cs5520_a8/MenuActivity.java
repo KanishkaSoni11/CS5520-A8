@@ -21,8 +21,10 @@ import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,6 +64,8 @@ public class MenuActivity extends AppCompatActivity {
         welcome.setText("Welcome " + value + "!");
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        mDatabase = FirebaseDatabase.getInstance().getReference("stickerExchangeDetails");
+        receivedHistoryCollectors = new ArrayList<>();
 
         mDatabase.child("allExchanges").orderByChild("dateSent").addValueEventListener(new ValueEventListener() {
             @Override
