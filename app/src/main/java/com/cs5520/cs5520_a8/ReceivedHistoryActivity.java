@@ -52,7 +52,6 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "receiver")
                 .setSmallIcon(R.drawable.happy)
-                .setContentTitle("Sender")
                 .setContentText("Someone sent you a new sticker.")
                 .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.angry_man))
                 .setStyle(new NotificationCompat.BigPictureStyle()
@@ -81,11 +80,30 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         userID = sharedPreferences.getString("username", "");
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        mDatabase.child("allExchanges").orderByChild("dateSent").limitToLast(2).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
+                    if (stickerExchangeDetails.receiverId.equals(userID)) {
+                        builder.setContentTitle(stickerExchangeDetails.getSenderId());
+                        
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         mDatabase.child("allExchanges").orderByChild("dateSent").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 receivedHistoryCollectors.clear();
+
                 notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
