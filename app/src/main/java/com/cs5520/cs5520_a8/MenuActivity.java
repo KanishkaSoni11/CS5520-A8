@@ -46,8 +46,8 @@ public class MenuActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "receiver")
-                .setSmallIcon(R.drawable.happy)
-                .setContentText("Someone sent you a new sticker.")
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setContentText("Received a new sticker.")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
