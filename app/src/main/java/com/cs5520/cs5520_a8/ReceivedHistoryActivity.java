@@ -44,19 +44,19 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_received_history);
 
-        createNotificationChannel();
+//        createNotificationChannel();
 
-        Intent intent = new Intent(this, ReceivedHistoryActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "receiver")
-                .setSmallIcon(R.drawable.happy)
-                .setContentText("Someone sent you a new sticker.")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+//        Intent intent = new Intent(this, ReceivedHistoryActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+//
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "receiver")
+//                .setSmallIcon(R.drawable.happy)
+//                .setContentText("Someone sent you a new sticker.")
+//                .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                // Set the intent that will fire when the user taps the notification
+//                .setContentIntent(pendingIntent)
+//                .setAutoCancel(true);
 
         mDatabase = FirebaseDatabase.getInstance().getReference("stickerExchangeDetails");
 
@@ -75,7 +75,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         userID = sharedPreferences.getString("username", "");
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         mDatabase.child("allExchanges").orderByChild("dateSent").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,14 +96,14 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
                 }
 
                 Collections.reverse(receivedHistoryCollectors);
-                builder.setContentTitle(receivedHistoryCollectors.get(0).getSenderId());
-                String uri = "@drawable/"+ receivedHistoryCollectors.get(0).getSticker();
-                int sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
-                builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker));
-                builder.setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker)
-                        ).bigLargeIcon(null));
-                notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
+//                builder.setContentTitle(receivedHistoryCollectors.get(0).getSenderId());
+//                String uri = "@drawable/"+ receivedHistoryCollectors.get(0).getSticker();
+//                int sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
+//                builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker));
+//                builder.setStyle(new NotificationCompat.BigPictureStyle()
+//                        .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker)
+//                        ).bigLargeIcon(null));
+//                notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
                 receivedHIstoryAdapter.notifyDataSetChanged();
             }
 

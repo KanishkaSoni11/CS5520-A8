@@ -2,10 +2,18 @@ package com.cs5520.cs5520_a8;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +44,7 @@ public class StickerGridActivity extends AppCompatActivity {
     String userID;
     long totalStickerExchange;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +66,14 @@ public class StickerGridActivity extends AppCompatActivity {
         GridView stickerGridView = (GridView) findViewById(R.id.sticker_grid_view);
         StickerGridViewAdapter adapter = new StickerGridViewAdapter(this, imageIdArray);
         stickerGridView.setAdapter(adapter);
+
+        createNotificationChannel();
+
+        Intent intent = new Intent(this, ReceivedHistoryActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+
 
         View parentLayout = findViewById(android.R.id.content);
         stickerGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -95,8 +112,29 @@ public class StickerGridActivity extends AppCompatActivity {
                                 })
                                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
                                 .show();
+                        String uri = "@drawable/"+ imageIdArray[position];
+                        int sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(StickerGridActivity.this, "receiver")
+                                .setSmallIcon(R.drawable.happy)
+                                .setContentTitle(receiverID)
+                                .setContentText("Someone sent you a new sticker.")
+                                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker))
+                                .setStyle(new NotificationCompat.BigPictureStyle()
+                                .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker)
+                                ).bigLargeIcon(null))
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                // Set the intent that will fire when the user taps the notification
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true);
+
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(StickerGridActivity.this);
+
+
+
+                        notificationManager.notify(1, builder.build());
                     }
                 });
+
                 alertDialog.show();
 
             }
@@ -128,6 +166,22 @@ public class StickerGridActivity extends AppCompatActivity {
                 Toast.makeText(StickerGridActivity.this, "Failed to send Sticker " + error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Receive Notification";
+            String description = "Receive Notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("receiver", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 }
