@@ -6,11 +6,12 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SentHistoryViewHolder  extends RecyclerView.ViewHolder {
+public class SentHistoryViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView stickerIV;
     public TextView countTV;
@@ -23,10 +24,16 @@ public class SentHistoryViewHolder  extends RecyclerView.ViewHolder {
 
     public void bindThisData(SentHistory sentHistoryToBind) {
 
-        String uri = "@drawable/"+ sentHistoryToBind.getSticker();
+        String uri = "@drawable/" + sentHistoryToBind.getSticker();
         int imageResource = itemView.getContext().getResources().getIdentifier(uri, null, itemView.getContext().getPackageName());
-        Drawable res = itemView.getContext().getResources().getDrawable(imageResource);
-        stickerIV.setImageDrawable(res);
+        try {
+            Drawable res = itemView.getContext().getResources().getDrawable(imageResource);
+            stickerIV.setImageDrawable(res);
+        } catch (Exception exception) {
+
+            Toast.makeText(itemView.getContext(), "Images not loaded due to different version", Toast.LENGTH_SHORT).show();
+        }
+
         String s = "Sent Count: ".concat(sentHistoryToBind.getCount());
         countTV.setText(s);
     }
