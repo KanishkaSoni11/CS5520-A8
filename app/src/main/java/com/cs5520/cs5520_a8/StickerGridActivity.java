@@ -67,11 +67,11 @@ public class StickerGridActivity extends AppCompatActivity {
         StickerGridViewAdapter adapter = new StickerGridViewAdapter(this, imageIdArray);
         stickerGridView.setAdapter(adapter);
 
-        createNotificationChannel();
-
-        Intent intent = new Intent(this, ReceivedHistoryActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+//        createNotificationChannel();
+//
+//        Intent intent = new Intent(this, ReceivedHistoryActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
 
 
@@ -112,26 +112,25 @@ public class StickerGridActivity extends AppCompatActivity {
                                 })
                                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
                                 .show();
-                        String uri = "@drawable/"+ imageIdArray[position];
-                        int sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(StickerGridActivity.this, "receiver")
-                                .setSmallIcon(R.drawable.happy)
-                                .setContentTitle(receiverID)
-                                .setContentText("Someone sent you a new sticker.")
-                                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker))
-                                .setStyle(new NotificationCompat.BigPictureStyle()
-                                .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker)
-                                ).bigLargeIcon(null))
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                // Set the intent that will fire when the user taps the notification
-                                .setContentIntent(pendingIntent)
-                                .setAutoCancel(true);
+//                        String uri = "@drawable/"+ imageIdArray[position];
+//                        int sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
+//                        NotificationCompat.Builder builder = new NotificationCompat.Builder(StickerGridActivity.this, "receiver")
+//                                .setSmallIcon(R.drawable.happy)
+//                                .setContentTitle(receiverID)
+//                                .setContentText("Someone sent you a new sticker.")
+//                                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker))
+//                                .setStyle(new NotificationCompat.BigPictureStyle()
+//                                .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker)
+//                                ).bigLargeIcon(null))
+//                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                                // Set the intent that will fire when the user taps the notification
+//                                .setContentIntent(pendingIntent)
+//                                .setAutoCancel(true);
+//
+//                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(StickerGridActivity.this);
+//
+//                            notificationManager.notify(1, builder.build());
 
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(StickerGridActivity.this);
-
-
-
-                        notificationManager.notify(1, builder.build());
                     }
                 });
 
