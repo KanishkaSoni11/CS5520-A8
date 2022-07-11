@@ -1,23 +1,13 @@
 package com.cs5520.cs5520_a8;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,19 +15,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class ReceivedHistoryActivity extends AppCompatActivity {
 
+    String userID;
     private RecyclerView receiveHistoryRecyclerView;
     private List<ReceivedHistoryCollector> receivedHistoryCollectors;
     private ReceivedHistoryAdapter receivedHIstoryAdapter;
     private DatabaseReference mDatabase;
-    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +50,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         userID = sharedPreferences.getString("username", "");
 
+
         mDatabase.child("allExchanges").orderByChild("dateSent").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -71,10 +60,15 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
                     if (stickerExchangeDetails.receiverId.equals(userID)) {
-                        System.out.println("list" + stickerExchangeDetails.toString());
+                        DatabaseReference db = FirebaseDatabase.getInstance().getReference("stickerExchangeDetails").child("allExchanges").child(dataSnapshot.getKey()).child("viewed");
+                        db.setValue(true);
+
                         ReceivedHistoryCollector receivedHistoryCollector = new ReceivedHistoryCollector(stickerExchangeDetails.getSenderId(), stickerExchangeDetails.getDateSent(), stickerExchangeDetails.getStickerId());
+
+                        stickerExchangeDetails.setViewed(true);
                         if (!receivedHistoryCollectors.contains(receivedHistoryCollector)) {
                             receivedHistoryCollectors.add(receivedHistoryCollector);
+
                         }
 
                     }
@@ -93,21 +87,5 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Receive Notification";
-            String description = "Receive Notification";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("receiver", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 }

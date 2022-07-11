@@ -32,6 +32,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private List<ReceivedHistoryCollector> receivedHistoryCollectors;
     private DatabaseReference mDatabase;
+    private boolean check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class MenuActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
                     if (stickerExchangeDetails.receiverId.equals(value)) {
+                        check = stickerExchangeDetails.isViewed();
                         ReceivedHistoryCollector receivedHistoryCollector = new ReceivedHistoryCollector(stickerExchangeDetails.getSenderId(), stickerExchangeDetails.getDateSent(), stickerExchangeDetails.getStickerId());
                         if (!receivedHistoryCollectors.contains(receivedHistoryCollector)) {
                             receivedHistoryCollectors.add(receivedHistoryCollector);
@@ -93,7 +95,9 @@ public class MenuActivity extends AppCompatActivity {
                 builder.setStyle(new NotificationCompat.BigPictureStyle()
                         .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker)
                         ).bigLargeIcon(null));
-                notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
+                if(!check) {
+                    notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
+                }
             }
 
 

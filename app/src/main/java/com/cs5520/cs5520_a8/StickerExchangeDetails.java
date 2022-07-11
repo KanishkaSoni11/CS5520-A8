@@ -5,15 +5,16 @@ public class StickerExchangeDetails {
     public String stickerId;
     public String dateSent;
     public String receiverId;
+    public boolean viewed;
 
     public StickerExchangeDetails() {
     }
-
-    public StickerExchangeDetails(String senderId, String stickerId, String dateSent, String receiverId) {
+    public StickerExchangeDetails(String senderId, String stickerId, String dateSent, String receiverId, boolean viewed) {
         this.senderId = senderId;
         this.stickerId = stickerId;
         this.dateSent = dateSent;
         this.receiverId = receiverId;
+        this.viewed = viewed;
     }
 
     public String getSenderId() {
@@ -47,6 +48,16 @@ public class StickerExchangeDetails {
     public String getReceiverId() {
         return receiverId;
     }
+
+
+    public boolean isViewed() {
+        return viewed;
+    }
+
+    public void setViewed(boolean viewed) {
+        this.viewed = viewed;
+    }
+
 
 
 }

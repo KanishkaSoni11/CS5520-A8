@@ -38,13 +38,14 @@ public class RealTimeDbActivity extends AppCompatActivity {
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         String name = user.getText().toString();
                         System.out.println("Child added");
-                        StickerExchangeDetails user = new StickerExchangeDetails(name, "", "", "");
+                        StickerExchangeDetails user = new StickerExchangeDetails(name, "", "", "", false);
                         Task t1 = mDatabase.child("stickerExchangeDetails").child(user.senderId).setValue(user);
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         System.out.println("Child added");
+
 
                     }
 
@@ -71,7 +72,7 @@ public class RealTimeDbActivity extends AppCompatActivity {
     public void onChildAdded1(View view) {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("stickerExchangeDetails");
-        StickerExchangeDetails user1 = new StickerExchangeDetails("A", "2", "4", "");
+        StickerExchangeDetails user1 = new StickerExchangeDetails("A", "2", "4", "", false);
         Task t1 = myRef.child("stickerExchangeDetails").setValue(user1);
 
 //        Task t = myRef.setValue("K");
