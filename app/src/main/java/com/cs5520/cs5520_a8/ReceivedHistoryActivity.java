@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ReceivedHistoryActivity extends AppCompatActivity {
@@ -36,10 +37,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
     private List<ReceivedHistoryCollector> receivedHistoryCollectors;
     private ReceivedHistoryAdapter receivedHIstoryAdapter;
     private DatabaseReference mDatabase;
-    private StickerExchangeDetails stickerExchangeDetails;
     String userID;
-    private String sender;
-    private int sticker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,29 +49,6 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ReceivedHistoryActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        mDatabase = FirebaseDatabase.getInstance().getReference("stickerExchangeDetails");
-        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        userID = sharedPreferences.getString("username", "");
-
-//        mDatabase.child("allExchanges").orderByChild("dateSent").limitToLast(10).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    System.out.println("holaaaaaaaaaaaaaaaaaaaaaaa");
-//                    stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
-//                    if (stickerExchangeDetails.receiverId.equals(userID)) {
-//                        sender = stickerExchangeDetails.getSenderId();
-//                        System.out.println("----------"+sender);
-//                        String uri = "@drawable/"+ stickerExchangeDetails.getStickerId();
-//                        sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
-//                        break;
-//                    }
-//                }
-//                receivedHistoryCollectors.clear();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {}
-//        });
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "receiver")
                 .setSmallIcon(R.drawable.happy)
@@ -82,13 +57,13 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
                 .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.angry_man))
                 .setStyle(new NotificationCompat.BigPictureStyle()
                         .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.angry_man)
-                                ).bigLargeIcon(null))
+                        ).bigLargeIcon(null))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
-
+        mDatabase = FirebaseDatabase.getInstance().getReference("stickerExchangeDetails");
 
         receiveHistoryRecyclerView = findViewById(R.id.recyclerView_receive_history);
         receiveHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -102,6 +77,9 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
                 DividerItemDecoration.VERTICAL);
         receiveHistoryRecyclerView.addItemDecoration(dividerItemDecoration);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        userID = sharedPreferences.getString("username", "");
+
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         mDatabase.child("allExchanges").orderByChild("dateSent").addValueEventListener(new ValueEventListener() {
             @Override
@@ -110,7 +88,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
                 receivedHistoryCollectors.clear();
                 notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
+                    StickerExchangeDetails stickerExchangeDetails = dataSnapshot.getValue(StickerExchangeDetails.class);
                     if (stickerExchangeDetails.receiverId.equals(userID)) {
                         System.out.println("list" + stickerExchangeDetails.toString());
                         ReceivedHistoryCollector receivedHistoryCollector = new ReceivedHistoryCollector(stickerExchangeDetails.getSenderId(), stickerExchangeDetails.getDateSent(), stickerExchangeDetails.getStickerId());
@@ -122,7 +100,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
 
                 }
 
-
+                Collections.reverse(receivedHistoryCollectors);
                 receivedHIstoryAdapter.notifyDataSetChanged();
             }
 
@@ -136,7 +114,7 @@ public class ReceivedHistoryActivity extends AppCompatActivity {
 
     }
 
-    public void createNotificationChannel() {
+    private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
