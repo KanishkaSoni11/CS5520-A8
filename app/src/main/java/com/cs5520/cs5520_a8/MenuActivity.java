@@ -88,15 +88,17 @@ public class MenuActivity extends AppCompatActivity {
                 }
 
                 Collections.reverse(receivedHistoryCollectors);
-                builder.setContentTitle(receivedHistoryCollectors.get(0).getSenderId());
-                String uri = "@drawable/"+ receivedHistoryCollectors.get(0).getSticker();
-                int sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
-                builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker));
-                builder.setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(),sticker)
-                        ).bigLargeIcon(null));
-                if(!check) {
-                    notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
+                if (!receivedHistoryCollectors.isEmpty()) {
+                    builder.setContentTitle(receivedHistoryCollectors.get(0).getSenderId());
+                    String uri = "@drawable/" + receivedHistoryCollectors.get(0).getSticker();
+                    int sticker = getApplicationContext().getResources().getIdentifier(uri, null, getApplicationContext().getPackageName());
+                    builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), sticker));
+                    builder.setStyle(new NotificationCompat.BigPictureStyle()
+                            .bigPicture(BitmapFactory.decodeResource(getApplicationContext().getResources(), sticker)
+                            ).bigLargeIcon(null));
+                    if (!check) {
+                        notificationManager.notify((int) snapshot.getChildrenCount() + 1, builder.build());
+                    }
                 }
             }
 
